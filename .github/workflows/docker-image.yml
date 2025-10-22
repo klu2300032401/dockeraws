@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./springbootbackend
-          file: ./springbootbackend/backend.Dockerfile
+          file: ./springbootbackend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USER }}/dockeraws-backend:latest
 
@@ -39,7 +39,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./reactfrontend
-          file: ./reactfrontend/frontend.Dockerfile
+          file: ./reactfrontend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USER }}/dockeraws-frontend:latest
 
