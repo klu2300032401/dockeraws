@@ -53,9 +53,14 @@ jobs:
       - name: Deploy to AWS EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@${{ secrets.AWS_IP }} << 'EOF'
-            cd DOCKER-FULLSTACK-PROJECT || git clone https://github.com/${{ github.repository }}.git
+            # Clone repo into DOCKER-FULLSTACK-PROJECT if folder doesn't exist
+            if [ ! -d "DOCKER-FULLSTACK-PROJECT" ]; then
+              git clone https://github.com/${{ github.repository }}.git DOCKER-FULLSTACK-PROJECT
+            fi
+
             cd DOCKER-FULLSTACK-PROJECT
             git pull origin main
+
             sudo docker-compose down
             sudo docker-compose pull
             sudo docker-compose up -d --build
