@@ -1,0 +1,32 @@
+services:
+  mysqldb:
+    image: mysql:8
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: docker
+      MYSQL_DATABASE: pracdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    image: guttalohitha/dockeraws-backend:latest
+    container_name: springboot
+    ports:
+      - "2011:8080"
+    depends_on:
+      - mysqldb
+    restart: on-failure
+
+  frontend:
+    image: guttalohitha/dockeraws-frontend:latest
+    container_name: react
+    ports:
+      - "2020:80"
+    depends_on:
+      - backend
+    restart: on-failure
+
+volumes:
+  mysql_data:
